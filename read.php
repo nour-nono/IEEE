@@ -1,9 +1,15 @@
 <?php
 require_once 'db.php';
+// Prepare and execute the SQL query to fetch all records from the table
+
 $stmt = $db->prepare("SELECT * FROM ".$table_name);
 $stmt->execute();
-while ($row = $stmt->fetch()) { 
+// Loop through each row in the result set
+
+while ($row = $stmt->fetch()) {
+    // Check if the current row's ID matches the ID from the GET request
     if (isset($_GET['id']) && $_GET['id'] == $row['id']) {
+        // Display a form to update the current task
         echo <<<HEREDOC
             <form action="update.php" method="POST">
             <input name='input' value="{$row['todo_tasks']}"/>
@@ -12,6 +18,7 @@ while ($row = $stmt->fetch()) {
             </form>
         HEREDOC;
     } else {
+        // Display the task with options to update or delete
         echo <<<HEREDOC
         <li class=" w-3/4 flex items-center justify-between m-2 p-2">
         <div>
