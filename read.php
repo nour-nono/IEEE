@@ -12,9 +12,9 @@ while ($row = $stmt->fetch()) {
         // Display a form to update the current task
         echo <<<HEREDOC
             <form action="update.php" method="POST">
-            <input name='input' value="{$row['todo_tasks']}"/>
+            <input name='input' value="{$row['todo_tasks']}" class="rounded p-2"/>
             <input hidden name='id' value="{$row['id']}"/>
-            <input type="submit" value="Save" />
+            <button type="submit" class="save-button"> <span>Save</span></button>
             </form>
         HEREDOC;
     } else {
