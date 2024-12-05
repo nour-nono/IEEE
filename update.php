@@ -16,9 +16,10 @@ $stmt = $db->prepare($query);
 // Execute the query with the provided task and id
 $stmt->execute([$task, $id]);
 
+echo json_encode(['id' => $id, 'task' => $task]);
 // Redirect to the index page after updating
-header("Location: index.php");
+// header("Location: index.php");
 
 // it is a good practice to exit after a redirect to prevent further execution
-exit();
+// exit();
 ?>

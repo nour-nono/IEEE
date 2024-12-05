@@ -12,8 +12,8 @@ $stmt = $db->prepare("DELETE FROM ".$table_name." WHERE id = ".$id);
 $stmt->execute();
 
 // Redirect to the index page after deletion
-header("Location: index.php");
+// header("Location: index.php");
 
 // it is a good practice to exit after a redirect to prevent further execution
-exit();
+// exit();
 ?>

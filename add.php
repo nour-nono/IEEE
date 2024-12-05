@@ -10,10 +10,10 @@ $stmt = $db->prepare("INSERT INTO " . $table_name . " (`todo_tasks`) VALUES ( ? 
 
 // Execute the statement with the task as a parameter
 $stmt->execute([$task]);
-
+echo json_encode(['id' => $db->lastInsertId(), 'task' => $task]);
 // Redirect to the index page after insertion
-header("Location: index.php");
+// header("Location: index.php");
 
 // it is a good practice to exit after a redirect to prevent further execution
-exit();
+// exit();
 ?>
