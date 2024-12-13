@@ -10,7 +10,7 @@
 
 <body>
     <section class="h-screen w-screen bg-slate-600 flex items-center justify-center flex-col">
-        <form onsubmit="(function(e) { addFunction(e); })(event)">
+        <form id="add-form"> <!-- onsubmit="(function(e) { addFunction(e); })(event)" -->
             <section class="flex items-center justify-center flex-col">
                 <label for="input">TODO LIST</label>
                 <input type="text" id="input" name="input" placeholder="Add a new todo" required class=" rounded p-4 m-4">
@@ -32,6 +32,8 @@
         </ul>
     </section>
     <script>
+        // Attach event listener to the form
+        document.getElementById('add-form').addEventListener('submit', addFunction);
         /**
          * Creates a new todo item element.
          * @param {number} id - The ID of the todo item.
