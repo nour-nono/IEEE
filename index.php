@@ -119,21 +119,25 @@
             e.preventDefault();
             const task = e.target[0].value;
             const id = e.target[1].value;
-            const ajax = new XMLHttpRequest();
-            ajax.open('POST', 'update.php', true);
-            ajax.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-            ajax.send('input=' + task + '&id=' + id);
-            ajax.onreadystatechange = function() {
-                if (ajax.readyState === 4 && ajax.status === 200) {
-                    const response = JSON.parse(ajax.responseText);
-                    if (response.task.trim() === '') {
-                        alert('Please enter a valid todo task');
-                        return;
-                    }
-                    const frag = createItem(response.id, response.task);
-                    document.querySelector('ul').replaceChild(frag, e.target);
+            fetch('update.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: new URLSearchParams({
+                    input: task,
+                    id: id
+                })
+            })
+            .then(response => response.json())
+            .then(response => {
+                if (response.task.trim() === '') {
+                    alert('Please enter a valid todo task');
+                    return;
                 }
-            }
+                const frag = createItem(response.id, response.task);
+                document.querySelector('ul').replaceChild(frag, e.target);
+            });
         }
 
         /**
@@ -148,17 +152,25 @@
                 alert('Please enter a valid todo task');
                 return;
             }
-            const ajax = new XMLHttpRequest();
-            ajax.open('POST', 'add.php', true);
-            ajax.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-            ajax.send('input=' + value);
-            ajax.onreadystatechange = function() {
-                if (ajax.readyState === 4 && ajax.status === 200) {
-                    const response = JSON.parse(ajax.responseText);
-                    const frag = createItem(response.id, response.task);
-                    document.querySelector('ul').appendChild(frag);
+            fetch('add.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: new URLSearchParams({
+                    input: value
+                })
+            })
+            .then(response => response.json())
+            .then(response => {
+                const frag = createItem(response.id, response.task);
+                const ulElement = document.querySelector('ul');
+                if (ulElement) {
+                    ulElement.appendChild(frag);
+                } else {
+                    console.error('ul element not found');
                 }
-            }
+            });
         }
 
         /**
@@ -169,14 +181,14 @@
         function deleteFunction(e) {
             e.preventDefault();
             const id = e.target.getAttribute('data-id');
-            const ajax = new XMLHttpRequest();
-            ajax.open('GET', 'delete.php?id=' + id, true);
-            ajax.send();
-            ajax.onreadystatechange = function() {
-                if (ajax.readyState === 4 && ajax.status === 200) {
+            fetch('delete.php?id=' + id, {
+                method: 'GET'
+            })
+            .then(response => {
+                if (response.ok) {
                     e.target.parentElement.parentElement.remove();
                 }
-            }
+            });
         }
     </script>
 </body>
