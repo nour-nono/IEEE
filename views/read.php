@@ -12,7 +12,7 @@ while ($row = $stmt->fetch()):
         // Display a form to update the current task
 ?>
         <form onsubmit="updateFunction(event);">
-            <input name='input' value=<?= $row['todo_tasks'] ?> class="rounded p-2" />
+            <input name='input' value="<?= htmlspecialchars($row['todo_tasks'], ENT_QUOTES, 'UTF-8') ?>" class="rounded p-2" />
             <input hidden name='id' value=<?= $row['id'] ?> />
             <button type="submit" class="save-button"> <span>Save</span></button>
         </form>
