@@ -32,8 +32,6 @@
         </ul>
     </section>
     <script>
-        // Attach event listener to the form
-        document.getElementById('add-form').addEventListener('submit', addFunction);
         /**
          * Creates a new todo item element.
          * @param {number} id - The ID of the todo item.
@@ -192,6 +190,10 @@
                 }
             });
         }
+                // Attach event listener to the form
+                document.addEventListener('DOMContentLoaded', function() {
+                    document.getElementById('add-form').addEventListener('submit', addFunction);
+                });
     </script>
 </body>
 
